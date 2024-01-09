@@ -5,17 +5,20 @@ import logging
 import requests
 from requests_oauthlib import OAuth1
 import os
+import configparser
 
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-consumer_key = ""
-consumer_secret = ""
-access_token = ""
-access_token_secret = ""
+consumer_key = config['DEFAULT']['consumer_key']
+consumer_secret = config['DEFAULT']['consumer_secret']
+access_token = config['DEFAULT']['access_token']
+access_token_secret = config['DEFAULT']['access_token_secret']
 
 app = func.FunctionApp()
 
 def random_fact():
-    return "Automated Test"
+    return "Hello world !"
 
 
 def format_fact(fact):
