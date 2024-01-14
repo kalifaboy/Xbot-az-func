@@ -5,15 +5,11 @@ import logging
 import requests
 from requests_oauthlib import OAuth1
 import os
-import configparser
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-consumer_key = config['DEFAULT']['consumer_key']
-consumer_secret = config['DEFAULT']['consumer_secret']
-access_token = config['DEFAULT']['access_token']
-access_token_secret = config['DEFAULT']['access_token_secret']
+consumer_key = os.environ.get('consumer_key')
+consumer_secret = os.environ.get('consumer_secret')
+access_token = os.environ.get('access_token')
+access_token_secret = os.environ.get('access_token_secret')
 
 app = func.FunctionApp()
 

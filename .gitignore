@@ -22,7 +22,6 @@ project.lock.json
 appsettings.json
 local.settings.json
 
-config.ini
 
 node_modules
 dist
