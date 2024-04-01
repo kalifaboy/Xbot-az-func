@@ -1,0 +1,80 @@
+import csv
+import json
+import random
+
+def read_and_continue(csv_path, pos_path, default_start=1, num_rows=3):
+    # Try to read the last position from the file
+    try:
+        with open(pos_path, 'r') as f:
+            start_row = int(f.read().strip())
+            # Skip header row
+            if start_row == 0:
+                start_row = 1
+    except (FileNotFoundError, ValueError):
+        # If file not found or empty, start from default_start
+        start_row = default_start
+
+    rows_read = 0
+    rows = []
+
+    # Open the CSV and read specified rows
+    with open(csv_path, 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for i, row in enumerate(reader):
+            if i >= start_row:
+                rows.append(row)
+                rows_read += 1
+                if rows_read == num_rows:
+                    break
+    
+    # We are at the end of file
+    if len(rows) < num_rows:
+        new_start_row = 1
+    else:
+        # Update the start row for the next read
+        new_start_row = start_row + rows_read
+
+    with open(pos_path, 'w') as f:
+        f.write(str(new_start_row))
+    
+    # Dictionary keys
+    keys = ['Gender', 'Name', 'Age']
+
+    # Transform each sublist into a dictionary
+    result_dicts = [dict(zip(keys, row)) for row in rows]
+
+    return result_dicts, new_start_row
+
+def load_tweets_content(json_file):
+    with open(json_file) as tweet_settings_file:
+        tweet_settings_content = tweet_settings_file.read()
+    
+    parsed_json = json.loads(tweet_settings_content)
+
+    return parsed_json
+
+def tweet_text_generator(csv_file, position_file, json_file):
+    rows, new_start_row = read_and_continue(csv_file, position_file)
+    tweets_content = load_tweets_content(json_file)
+
+    tweet = f"{random.choice(tweets_content['header'])}\n\n"
+
+    for row in rows:
+        tweet += f"{row['Name']} ({row['Gender']}) - Age: {row['Age']}\n"
+    
+    tweet += f"\n{random.choice(tweets_content['footer'])}\n\n"
+    tweet += f"{random.choice(tweets_content['conclusion'])}\n"
+    random_sample_tags = random.sample(tweets_content["tags"], 2)
+    tweet += " ".join(random_sample_tags)
+
+    return tweet, new_start_row
+
+#Usage
+if __name__ == "__main__":
+    csv_file = 'martyrs.csv'
+    position_file = 'last_position.txt' # File to store the last read row number
+
+    json_file = 'tweets_content.json'
+
+    tweet, new_start_row = tweet_text_generator(csv_file, position_file, json_file)
+    print(tweet)
