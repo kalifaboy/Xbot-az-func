@@ -22,7 +22,7 @@ def read_position_index(pos_path, default_start=1):
         return start_row
     else:
         connection_string = os.environ.get('az_blob_stor_cnx_str')
-        blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         container_name = 'gazacontainer'
         blob_name = pos_path
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
@@ -39,7 +39,7 @@ def write_position_index(new_start_row, pos_path):
             f.write(str(new_start_row))
     else:
         connection_string = os.environ.get('az_blob_stor_cnx_str')
-        blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+        blob_service_client = BlobServiceClient.from_connection_string(connection_string)
         container_name = 'gazacontainer'
         blob_name = pos_path
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
