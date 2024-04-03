@@ -5,14 +5,15 @@ import logging
 import requests
 from requests_oauthlib import OAuth1
 from tweet_generator import tweet_text_generator
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 import os
 
-#load_dotenv()
+load_dotenv()
 consumer_key = os.environ.get('consumer_key')
 consumer_secret = os.environ.get('consumer_secret')
 access_token = os.environ.get('access_token')
 access_token_secret = os.environ.get('access_token_secret')
+environment = os.environ.get('ENVIRONMENT')
 
 csv_file = 'martyrs.csv'
 position_file = 'last_position.txt' # File to store the last read row number
