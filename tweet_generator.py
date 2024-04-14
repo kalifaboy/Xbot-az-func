@@ -43,7 +43,7 @@ def write_position_index(new_start_row, pos_path):
         container_name = 'gazacontainer'
         blob_name = pos_path
         blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-        blob_client.upload_blob(new_start_row, overwrite=True)
+        blob_client.upload_blob(str(new_start_row), overwrite=True)
         logging.info("Successfully wrote data to blob: %s", blob_name)
 
 def read_and_continue(csv_path, pos_path, num_rows=3):
