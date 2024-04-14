@@ -5,10 +5,10 @@ import logging
 import requests
 from requests_oauthlib import OAuth1
 from tweet_generator import tweet_text_generator
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 
-load_dotenv()
+#load_dotenv()
 consumer_key = os.environ.get('consumer_key')
 consumer_secret = os.environ.get('consumer_secret')
 access_token = os.environ.get('access_token')
