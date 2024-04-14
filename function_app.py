@@ -54,7 +54,7 @@ def run():
     return True
     
 
-@app.route(route="TweetLauncher", auth_level=func.AuthLevel.ANONYMOUS)
+@app.route(route="TweetLauncher", auth_level=func.AuthLevel.FUNCTION)
 def TweetLauncher(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
